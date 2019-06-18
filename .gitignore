@@ -1,0 +1,6 @@
+dist
+.env
+node_modules
+.idea
+coverage/
+public
