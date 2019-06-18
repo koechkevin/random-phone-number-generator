@@ -9,6 +9,13 @@ services:
 
 before_script:
   - psql -c 'create database test_db;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
+env:
+  global:
+    CC_TEST_REPORTER_ID=$codeclimate
+    COVERALLS_REPO_TOKEN=$coveralls
 
 install:
   - yarn install
@@ -17,5 +24,5 @@ script:
   - yarn test
 
 after_success:
-  - COVERALLS_REPO_TOKEN=$coveralls
   - yarn coveralls
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
