@@ -6,6 +6,7 @@ import MutationObserver from 'mutation-observer';
 global.MutationObserver = MutationObserver;
 document.getSelection = jest.fn();
 
-
+global.describe = (message, test) => describe(message, test);
+global.it = (message, test) => it(message, test);
 // global.MutationObserver = () => {};
 configure({ adapter: new Adapter() });
