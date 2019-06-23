@@ -12,7 +12,7 @@ describe('api test', () => {
       .post('/api/generate')
       .send({ count: 10 })
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) done(err);
         expect(res.status).toEqual(200);
         done();
       });
@@ -23,7 +23,7 @@ describe('api test', () => {
       .post('/api/generate')
       .send({ count: 'string' })
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) done(err);
         expect(res.status).toEqual(422);
         done();
       });
@@ -34,7 +34,7 @@ describe('api test', () => {
       .post('/api/generate')
       .send({ count: 10 })
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) done(err);
         expect(res.status).toEqual(200);
         done();
       });
