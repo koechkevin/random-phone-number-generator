@@ -14,7 +14,7 @@ describe('api get', () => {
     request
       .get('/api/numbers?orderBy=id&order=DESC&page=1')
       .end((err, res) => {
-        if (err) done();
+        if (err) return done();
         expect(res.status).toEqual(200);
         done();
       });
@@ -23,7 +23,7 @@ describe('api get', () => {
     request
       .get('/api/numbers')
       .end((err, res) => {
-        if (err) done();
+        if (err) return done();
         expect(res.status).toEqual(200);
         done();
       });
@@ -32,7 +32,7 @@ describe('api get', () => {
     request
       .get('/api/recently-generated')
       .end((err, res) => {
-        if (err) done();
+        if (err) return done();
         expect(res.status).toEqual(200);
         done();
       });
@@ -47,7 +47,7 @@ describe('api get', () => {
     request
       .get('/api/recently-generated')
       .end((err, res) => {
-        if (err) done();
+        if (err) return done();
         expect(res.status).toEqual(200);
         done();
       });
