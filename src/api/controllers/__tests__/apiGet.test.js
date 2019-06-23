@@ -38,7 +38,12 @@ describe('api get', () => {
       });
   });
   it('gets recently generated twice', async (done) => {
-    await request.post('/api/generate').send({ count: 10 });
+    await models.Number.create({
+      mobile: 72727727,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      recently_generated: 2,
+    });
     request
       .get('/api/recently-generated')
       .end((err, res) => {
