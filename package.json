@@ -6,7 +6,7 @@
   "scripts": {
     "transpile": "babel src --out-dir dist -s",
     "clean": "rm -rf dist",
-    "build": "npm run clean && npm run transpile",
+    "build": "yarn clean && yarn transpile && webpack -p",
     "start": "NODE_ENV=production node dist/index.js",
     "test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate && jest --forceExit --coverage",
     "dev:back": "nodemon --exec babel-node src/index.js",
