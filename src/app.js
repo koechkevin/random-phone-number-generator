@@ -1,10 +1,13 @@
 import express from 'express';
-
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import routes from './api/controllers/routes';
 
 const expressApp = express();
-
+expressApp.use(cors());
+expressApp.use(bodyParser.json());
 // This registers your routes
-const app = expressApp;
+const app = routes(expressApp);
 
 app.use('*', (req, res) => {
   res
