@@ -33,14 +33,26 @@ export const TableHead = () => (
   </thead>
 );
 
-export const Pagination = ({ pagination: { currentPage, pageCount }, changePage }) => (
+export const Pagination = ({
+  pagination: { currentPage, pageCount }, value, onChange, changePage, enterPage,
+}) => (
   <div className="pagination">
     <button className="previous" onClick={() => changePage(currentPage - 1)}>&lsaquo;</button>
     <span>
       Page
-      <span className="page">{ currentPage }</span>
-      of
-      <span>{ pageCount }</span>
+      <span className="page">
+        <input
+          name="page"
+          type="text"
+          id="page-input"
+          onChange={onChange}
+          value={value || currentPage}
+          onKeyUp={enterPage}
+        />
+      </span>of
+      <span>
+        { pageCount }
+      </span>
     </span>
     <button className="next" onClick={() => changePage(currentPage + 1)}>&rsaquo;</button>
   </div>
@@ -55,19 +67,43 @@ export const TableRow = ({ number }) => (
     <td>{number.recently_generated}</td>
   </tr>
 );
-export const Table = ({ numbers, pagination, changePage }) => (
+
+export const Table = ({
+  numbers, pagination, changePage, onChange, value, enterPage,
+}) => (
   <div className="table-body">
     <table>
       <TableHead/>
       <tbody>
-        {
-      numbers.map(each => <TableRow key={each.mobile} number={each} />)
-    }
+        {numbers.map(each => <TableRow key={each.mobile} number={each} />)}
       </tbody>
     </table>
-    <Pagination changePage={changePage} pagination={pagination} />
+    <Pagination
+      enterPage={enterPage}
+      value={value}
+      onChange={onChange}
+      changePage={changePage}
+      pagination={pagination}
+    />
   </div>
 );
+
+export const Manage = ({ order, toggleOrder, sortBy }) => (
+  <div className="manage">
+    <span className="manage-head">All Generated Numbers as at </span>
+    <button className="desc" onClick={toggleOrder}>{order === 'DESC' ? 'Descending' : 'Ascending ..'}</button>
+    <button className="rec" onClick={() => sortBy('recently_generated')}>Date Created</button>
+    <button className="id" onClick={() => sortBy('id')}>Id</button>
+    <button className="mob" onClick={() => sortBy('mobile')}>Mobile Number</button>
+    <span className="sort">Sort by</span>
+  </div>
+);
+
+Manage.propTypes = {
+  order: propTypes.string.isRequired,
+  toggleOrder: propTypes.func.isRequired,
+  sortBy: propTypes.func.isRequired,
+};
 
 RecentlyGenerated.propTypes = {
   each: propTypes.object.isRequired,
@@ -84,11 +120,17 @@ TableRow.propTypes = {
 Pagination.propTypes = {
   pagination: propTypes.object.isRequired,
   changePage: propTypes.func.isRequired,
+  onChange: propTypes.func.isRequired,
+  value: propTypes.number.isRequired,
+  enterPage: propTypes.func.isRequired,
 };
 
 Table.propTypes = {
   numbers: propTypes.array.isRequired,
   pagination: propTypes.object.isRequired,
   changePage: propTypes.func.isRequired,
+  onChange: propTypes.func.isRequired,
+  value: propTypes.number.isRequired,
+  enterPage: propTypes.func.isRequired,
 };
 export default {};

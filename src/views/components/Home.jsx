@@ -3,12 +3,13 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Generator from './Generator';
 import { generateAction, recentlyGeneratedAction, getAllNumbers } from '../redux/actions';
-import { SideNav, Table } from './index';
+import { SideNav, Table, Manage } from './index';
 
 class Home extends Component {
   state = {
     order: 'DESC',
     sortCriteria: 'id',
+    page: 0,
   };
 
   static propTypes = {
@@ -18,6 +19,11 @@ class Home extends Component {
     getAllNumbers: propTypes.func.isRequired,
     allNumbers: propTypes.array.isRequired,
     pagination: propTypes.object.isRequired,
+    generateError: propTypes.string,
+  };
+
+  static defaultProps = {
+    generateError: '',
   };
 
   componentDidMount() {
@@ -27,18 +33,18 @@ class Home extends Component {
   }
 
   sortBy = (sortCriteria) => {
-    const { order } = this.state;
+    const { order, page } = this.state;
     this.setState({ sortCriteria });
-    const { getAllNumbers: all } = this.props;
-    all(`?orderBy=${sortCriteria}&order=${order}`);
+    const { getAllNumbers: all, pagination: { currentPage } } = this.props;
+    all(`?orderBy=${sortCriteria}&order=${order}&page=${page || currentPage}`);
   };
 
   toggleOrder = () => {
-    const { order, sortCriteria } = this.state;
+    const { order, sortCriteria, page } = this.state;
     const newOrder = order === 'DESC' ? 'ASC' : 'DESC';
     this.setState({ order: newOrder });
-    const { getAllNumbers: all } = this.props;
-    all(`?orderBy=${sortCriteria}&order=${newOrder}`);
+    const { getAllNumbers: all, pagination: { currentPage } } = this.props;
+    all(`?orderBy=${sortCriteria}&order=${newOrder}&page=${page || currentPage}`);
   };
 
   changePage = (page) => {
@@ -47,42 +53,60 @@ class Home extends Component {
     all(`?orderBy=${sortCriteria}&order=${order}&page=${page}`);
   };
 
-  manage = () => {
-    const { order } = this.state;
-    return (
-      <div className="manage">
-        <span className="manage-head">All Generated Numbers</span>
-        <button className="desc" onClick={this.toggleOrder}>{order === 'DESC' ? 'Descending' : 'Ascending ..'}</button>
-        <button className="rec" onClick={() => this.sortBy('recently_generated')}>Date Created</button>
-        <button className="id" onClick={() => this.sortBy('id')}>Id</button>
-        <button className="mob" onClick={() => this.sortBy('mobile')}>Mobile Number</button>
-        <span className="sort">Sort by</span>
-      </div>
-    );
+  changePageInput = e => this.setState({ [e.target.name]: e.target.value });
+
+  enterPage = (e) => {
+    const { getAllNumbers: all } = this.props;
+    const { order, sortCriteria, page } = this.state;
+    if (page && e.keyCode === 13) {
+      all(`?orderBy=${sortCriteria}&order=${order}&page=${page}`);
+      this.setState({ page: 0 });
+    }
   };
 
   render() {
     const {
-      generate, recentlyCreated, allNumbers, getAllNumbers: all, pagination,
+      generate, recentlyCreated, allNumbers, generateError,
+      getAllNumbers: all, pagination, pagination: { currentPage },
     } = this.props;
-    const { order, sortCriteria } = this.state;
-    const Manage = this.manage;
-    const getAll = () => all(`?orderBy=${sortCriteria}&order=${order}`);
+    const {
+      order, sortCriteria, page: value,
+    } = this.state;
+    const getAll = () => all(`?orderBy=${sortCriteria}&order=${order}&page=${value || currentPage}`);
     return (
       <div className="home-body">
         <SideNav recentlyCreated={recentlyCreated}/>
         <div className="body">
-          <Generator action={generate} getAllNumbers={getAll}/>
-          <Manage />
-          <Table changePage={this.changePage} pagination={pagination} numbers={allNumbers} />
+          <Generator
+            action={generate}
+            getAllNumbers={getAll}
+            generateError={generateError}
+          />
+          <Manage
+            toggleOrder={this.toggleOrder}
+            sortBy={this.sortBy}
+            order={order}
+          />
+          <Table
+            onChange={this.changePageInput}
+            changePage={this.changePage}
+            pagination={pagination}
+            numbers={allNumbers}
+            value={parseInt(value, 10)}
+            enterPage={this.enterPage}
+          />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ generate: { recentlyCreated, allNumbers, pagination } }) => ({
-  recentlyCreated, allNumbers, pagination,
+const mapStateToProps = ({
+  generate: {
+    recentlyCreated, allNumbers, pagination, generateError,
+  },
+}) => ({
+  recentlyCreated, allNumbers, pagination, generateError,
 });
 
 export default connect(

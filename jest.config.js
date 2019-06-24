@@ -5,6 +5,7 @@ module.exports = {
     '!src/index.js',
     '!src/app.js',
     '!src/views/index.js',
+    '!src/api/database/models/index.js',
     '!src/api/database/migrations/**/*.js',
   ],
   coverageDirectory: 'coverage',

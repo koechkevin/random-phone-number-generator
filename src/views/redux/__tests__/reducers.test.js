@@ -10,7 +10,7 @@ describe('reducer', () => {
   it('handles state accordingly', () => {
     expect(generate(initialState, ({
       type: 'GENERATE_FAILED', error: {},
-    }))).toEqual({ ...initialState });
+    }))).toEqual({ ...initialState, generateError: 'error' });
   });
 
   it('handles state accordingly', () => {

@@ -176,9 +176,13 @@ table {
   color: #0074D9;
   float: right;
   .page {
-    border: 1px solid #0074D9;
     margin: 0px .5em;
-    padding: .5em 1em;
+    input {
+      width: 50px;
+      padding: .7em;
+      border: 1px solid #0074D9;
+      outline: none;
+    }
   }
   span {
     padding: .5em;
@@ -195,4 +199,7 @@ table {
 .n {
   cursor: pointer;
   font-weight: bold;
+}
+.error {
+  border: 1px solid red !important;
 }

@@ -9,6 +9,11 @@ class Generator extends Component {
   static propTypes = {
     action: propTypes.func.isRequired,
     getAllNumbers: propTypes.func.isRequired,
+    generateError: propTypes.string,
+  };
+
+  static defaultProps = {
+    generateError: '',
   };
 
   handleChange = (e) => {
@@ -26,13 +31,14 @@ class Generator extends Component {
 
   render() {
     const { number } = this.state;
+    const { generateError } = this.props;
     return (
       <div className="generator">
         <div className="gen">
           <form onSubmit={this.handleSubmit}>
           Enter the number of phone numbers to generate
             <br/>
-            <input type="number" onChange={this.handleChange} value={number || ''}/>
+            <input className={generateError} type="number" onChange={this.handleChange} value={number || ''}/>
             <input type="submit" value="Generate"/>
           </form>
         </div>

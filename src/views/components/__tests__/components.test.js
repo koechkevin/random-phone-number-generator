@@ -81,6 +81,13 @@ describe('test Home', () => {
     const buttons = descending.length + recent.length + id.length + mobile.length;
     expect(buttons).toEqual(4);
   });
+
+  it('manually enters page number', () => {
+    const page = wrapper.find('#page-input');
+    page.simulate('change', { target: { name: 'page', value: 13 } });
+    page.simulate('keyup', { keyCode: 13 });
+    expect(props.getAllNumbers).toBeTruthy();
+  });
 });
 
 describe('mounts all children', () => {
@@ -107,6 +114,9 @@ describe('it renders table', () => {
     ],
     changePage: jest.fn(),
     pagination: initialState.pagination,
+    enterPage: jest.fn(),
+    onChange: jest.fn(),
+    value: 1,
   };
   const wrapper = mount(<Table {...props}/>);
   expect(wrapper.find('.table-row').length).toEqual(1);

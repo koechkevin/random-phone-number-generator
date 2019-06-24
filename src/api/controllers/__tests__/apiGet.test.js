@@ -39,7 +39,7 @@ describe('api get', () => {
   });
   it('gets recently generated twice', async (done) => {
     await models.Number.create({
-      mobile: 72727727,
+      mobile: Math.floor(new Date().getTime() / 1000),
       createdAt: new Date(),
       updatedAt: new Date(),
       recently_generated: 2,
