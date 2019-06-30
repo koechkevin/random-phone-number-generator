@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/koechkevin/random-phone-number-generator/badge.png?branch=master)](https://coveralls.io/github/koechkevin/random-phone-number-generator?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/koechkevin/random-phone-number-generator/badge.svg?branch=master)](https://coveralls.io/github/koechkevin/random-phone-number-generator?branch=master)
 
-#### random-phone-number-generator
+# random-phone-number-generator
 random-phone-number-generator is a javascript application that generates random phone numbers for a telecommunication company. The length of a phone number is 10 digits starting with a zero.
 
 ## Setup
@@ -29,16 +29,16 @@ random-phone-number-generator is a javascript application that generates random 
         PORT - the port number your application will run on. This defaults to 3000 if its not provided
     ```
     
-  #####Production
+  #### Production
     - Transpile the code and bundle by running `$ yarn build`
     - Run any available migrations - `$ yarn migrate`
     - Run the server `$ yarn start`
 
-  #####Development
+  #### Development
      - Start the api with `$ yarn dev:back`. This uses the default port you provided on environment variables
      - Run any available migrations - `$ yarn migrate`
      - Start the application by running the command `$ yarn start:dev`. This will run the application and serve on port 8080.
      
-  #####Testing
+  #### Testing
     - Run the tests using `$ yarn test`
      
