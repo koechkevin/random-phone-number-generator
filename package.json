@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "transpile": "babel src --out-dir dist -s",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -rf public",
     "build": "yarn clean && yarn transpile && webpack -p",
     "start": "NODE_ENV=production yarn migrate && node dist/index.js",
     "test": "NODE_ENV=test yarn migrate && jest --forceExit --coverage",
