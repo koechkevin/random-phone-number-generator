@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/koechkevin/random-phone-number-generator/badge.svg?branch=master)](https://coveralls.io/github/koechkevin/random-phone-number-generator?branch=master)
 
 # random-phone-number-generator
-random-phone-number-generator is a javascript application that generates random phone numbers for a telecommunication company. The length of a phone number is 10 digits starting with a zero.
+random-phone-number-generator is a monolithic javascript application that generates random phone numbers for a telecommunication company. The length of a phone number is 10 digits starting with a zero.
 
 ## Setup
  - Libraries, tools and Frameworks
